@@ -6,13 +6,16 @@ var Types = keystone.Field.Types;
  * ==========
  */
 
-var Genius = new keystone.List('Genius');
+var Genius = new keystone.List('Genius',{
+	autokey: { path: 'skills', from: 'topSkill', unique: false },
+});
 
 Genius.add({
 	name: { type: Types.Name, required: true, index: true },
 	email: { type: Types.Email, initial: true, required: true, index: true },
 	password: { type: Types.Password, initial: true, required: true },
-	tfrc: { type: Types.Text, initial: true, required: true }
+	tfrc: { type: Types.Text, initial: true, required: false },
+	topSkill: { type: Types.Text, initial: true, required: false }
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
 });
