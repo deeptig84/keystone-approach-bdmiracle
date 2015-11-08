@@ -20,6 +20,13 @@ function checkTopSkill(){
 	return true;
 }
 
+function checkTop3Skills(){
+	if (this.notify && this.top3Skills.trim() == ''){
+		return false;
+	}
+	return true;
+}
+
 function callback(err){
   if (err) return console.error(err);
   console.log('users notified!');
@@ -132,8 +139,8 @@ Genius.add({
 	charOUTER: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'CHARACTERISTIC OUTER'},
 	thinkingTypeL: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'THINKING TYPE L'},
 	thinkingTypeR: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'THINKING TYPE R'},
-	topSkill: { type: Types.Select,options: 'inter,intra,default', initial: true, required: false, dependsOn: { status: 'Report Processed'},default:'default',validate: checkTopSkill },
-	top3Skills:{type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'TOP 3 SKILLS(COMMA SEPERATED)'},
+	topSkill: { type: Types.Select,options: 'inter,intra,musical,kinesthetic,natural,logical,visual,linguistic,auditory,default', initial: true, required: false, dependsOn: { status: 'Report Processed'},default:'default',validate: checkTopSkill },
+	top3Skills:{type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'TOP 3 SKILLS(COMMA SEPERATED)',validate:checkTop3Skills},
 	notify: {type: Types.Boolean,initial: true}
 }, 'Permissions', {
 	isAdmin: { type: Boolean, label: 'Can access Keystone', index: true }
