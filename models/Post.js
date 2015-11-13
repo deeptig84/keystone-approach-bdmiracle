@@ -3,6 +3,15 @@ var Types = keystone.Field.Types;
 	Genius = keystone.list('Genius');
 	ObjectId = require('mongoose').Types.ObjectId; 
 	async = require('async');
+	mandrill = require('mandrill-api/mandrill');
+	mandrill_client = new mandrill.Mandrill('w-p_sIciNDC5segXB-zaEA'); 
+
+/*var server  = email.server.connect({
+   user:    "sagarmeansocean@gmail.com", 
+   password:"Dec#2011", 
+   host:    "smtp.gmail.com", 
+   ssl:     true
+});*/
 
 /**
  * Post Model
@@ -50,14 +59,38 @@ function callback(err){
 
 function sendEmail(fetchedUsers){
 	console.log("Should send an email"+fetchedUsers);
+	var message = {
+    "text": "Test email.. Please dont mind",
+    "subject": "Be The Miracle Test email",
+    "from_email": "lsagar.12@gmail.com",
+    "from_name": "Sagar",
+    "to": [{
+            "email": "anuraggupta86@gmail.com",
+            "name": "Anurag Gupta"
+        }],
+    "important": false,
+    "track_opens": true,
+    "track_clicks": true,
+    "auto_text": true
+	};
+	
+	mandrill_client.messages.send({"message": message}, function(result) {
+    console.log(result);
+   
+	}, function(e) {
+    // Mandrill returns the error as an object with name and message keys
+    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
+    // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+	});
+
 	/*new keystone.Email('enquiry-notification').send({
 		to: fetchedUsers,
 		from: {
 				name: 'Find Your Talents Adminn',
-				email: 'contact@find-your-talents-adminn.com'
+				email: 'anuraggupta86@gmail.com'
 		},
-		subject: 'New Enquiry for Find Your Talents Adminn',
-		enquiry: enquiry
+		subject: 'Test Mail',
+		enquiry: 'This is a test e-mail from me'
 	}, callback);*/
 }
 
