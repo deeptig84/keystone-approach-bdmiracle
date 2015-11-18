@@ -41,15 +41,20 @@ Post.schema.virtual('content.full').get(function() {
 
 Post.schema.post('save',function(){
 	var fetchedUsers = null;
-	if(this.skill == 'none'){
-		console.log(this.user);
-		fetchedUsers = Genius.model.find().where('_id',new ObjectId(this.user.toString())).exec();
-		async.applyEach([sendEmail,sendMessage],fetchedUsers,callback);
-	}
+	var content = this.content.brief;
+	if(this.skill == 'none')
+		fetchedUsers = Genius.model.find().where('_id',new ObjectId(this.user.toString()));
 	else{
-		fetchedUsers = Genius.model.find().where('skills', this.skill).exec();
-		async.applyEach([sendEmail,sendMessage],fetchedUsers,callback);
+		if(this.skill == 'all')
+			fetchedUsers = Genius.model.find();
+		else
+			fetchedUsers = Genius.model.find().where('skills', this.skill);
 	}
+	fetchedUsers.exec(function(err,geniuses){
+		if (err) return callback(err);
+		console.log(content);
+		async.applyEach([sendEmail,sendMessage],geniuses,content,callback);
+	});
 });
 
 function callback(err){
@@ -57,17 +62,14 @@ function callback(err){
   console.log('users notified!');
 }
 
-function sendEmail(fetchedUsers){
-	console.log("Should send an email"+fetchedUsers);
+function sendEmail(fetchedUsers,content){
+	console.log("Should send an email:"+content);
 	var message = {
-    "text": "Test email.. Please dont mind",
+    "text": content,
     "subject": "Be The Miracle Test email",
     "from_email": "lsagar.12@gmail.com",
     "from_name": "Sagar",
-    "to": [{
-            "email": "anuraggupta86@gmail.com",
-            "name": "Anurag Gupta"
-        }],
+    "to": fetchedUsers,
     "important": false,
     "track_opens": true,
     "track_clicks": true,
@@ -79,22 +81,12 @@ function sendEmail(fetchedUsers){
    
 	}, function(e) {
     // Mandrill returns the error as an object with name and message keys
-    console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
-    // A mandrill error occurred: Unknown_Subaccount - No subaccount exists with the id 'customer-123'
+		console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
 	});
 
-	/*new keystone.Email('enquiry-notification').send({
-		to: fetchedUsers,
-		from: {
-				name: 'Find Your Talents Adminn',
-				email: 'anuraggupta86@gmail.com'
-		},
-		subject: 'Test Mail',
-		enquiry: 'This is a test e-mail from me'
-	}, callback);*/
 }
 
-function sendMessage(fetchedUsers){
+function sendMessage(fetchedUsers,content){
 	console.log("Should send a message");
 	//Add Twilio code here..
 }
