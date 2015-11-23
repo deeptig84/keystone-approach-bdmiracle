@@ -1,7 +1,8 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
 	Genius = keystone.list('Genius');
-	ObjectId = require('mongoose').Types.ObjectId; 
+	//ObjectId = require('mongoose').Types.ObjectId; 
+	ObjectId = keystone.mongoose.Types.ObjectId; 
 	async = require('async');
 	mandrill = require('mandrill-api/mandrill');
 	mandrill_client = new mandrill.Mandrill('w-p_sIciNDC5segXB-zaEA'); 
