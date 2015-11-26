@@ -56,10 +56,10 @@ Genius.add({
 	dob: {type: Types.Date, dependsOn: { status: 'Report Processed'}, format: 'MM/DD/YYYY',initial: true},
 	address : { type: Types.Textarea, height:2,dependsOn: { status: 'Report Processed'} ,initial: true},
 	email: { type: Types.Email, initial: true, required: true, index: true },
-	gender:{ type: Types.Select, options: 'M,F',index: true,initial: true,required: true},
-	phoneNumber: {type: Types.Text, initial: true, required: true, index: true},
+	gender:{ type: Types.Select, options: 'M,F',index: true,initial: true,required: false},
+	phoneNumber: {type: Types.Text, initial: true, required: false, index: true},
 	password: { type: Types.Password, initial: true, required: true },
-	status: {type: Types.Select, options: 'Scan Not Taken, Scan Scheduled,Scan Taken-Report Not Arrived, Report Processed', default: 'Scan Not Taken', index: true,initial: true, required: true },
+	status: {type: Types.Select, options: 'Scan Not Taken, Scan Scheduled,Scan Taken-Report Not Arrived, Report Processed', default: 'Scan Not Taken', index: true,initial: true, required: false },
 	scanAppointmentDate: {type: Types.Datetime, dependsOn: { status: 'Scan Scheduled'}, initial: true,label:'Scan Appointment Date'},
 	//Brain Specific information here
 	preFrontalLobe: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'PRE-FRONTAL LOBE'},
