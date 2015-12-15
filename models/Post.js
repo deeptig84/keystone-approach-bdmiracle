@@ -7,6 +7,8 @@ var Types = keystone.Field.Types;
 	mandrill = require('mandrill-api/mandrill');
 	mandrill_client = new mandrill.Mandrill('w-p_sIciNDC5segXB-zaEA'); 
 
+var StatusMsgAndSub = require('./StatusMessage');	
+
 /*var server  = email.server.connect({
    user:    "sagarmeansocean@gmail.com", 
    password:"Dec#2011", 
@@ -31,7 +33,7 @@ Post.add({
 	publishedDate: { type: Types.Date, index: true},
 	//image: { type: Types.CloudinaryImage },
 	content: {
-		brief: { type: Types.Html, wysiwyg: true, height: 150 }
+		brief: { type: Types.Textarea, wysiwyg: true, height: 150 }
 	},
 	//categories: { type: Types.Relationship, ref: 'PostCategory', many: true }
 });
@@ -43,6 +45,7 @@ Post.schema.virtual('content.full').get(function() {
 Post.schema.post('save',function(){
 	var fetchedUsers = null;
 	var content = this.content.brief;
+	var subject = this.title;
 	if(this.skill == 'none')
 		fetchedUsers = Genius.model.find().where('_id',new ObjectId(this.user.toString()));
 	else{
@@ -54,7 +57,7 @@ Post.schema.post('save',function(){
 	fetchedUsers.exec(function(err,geniuses){
 		if (err) return callback(err);
 		console.log(content);
-		async.applyEach([sendEmail,sendMessage],geniuses,content,callback);
+		async.applyEach([StatusMsgAndSub.sendEmail,sendMessage],geniuses,content,subject,callback);
 	});
 });
 
@@ -63,6 +66,7 @@ function callback(err){
   console.log('users notified!');
 }
 
+/*
 function sendEmail(fetchedUsers,content){
 	console.log("Should send an email:"+content);
 	var message = {
@@ -85,9 +89,9 @@ function sendEmail(fetchedUsers,content){
 		console.log('A mandrill error occurred: ' + e.name + ' - ' + e.message);
 	});
 
-}
+}*/
 
-function sendMessage(fetchedUsers,content){
+function sendMessage(fetchedUsers,content,subject){
 	console.log("Should send a message");
 	//Add Twilio code here..
 }

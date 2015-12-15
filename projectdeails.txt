@@ -1,0 +1,46 @@
+{ "_id" : ObjectId("564ec4e065b9943c249c4f04"), "skills" : "default", "isAdmin" : true, "password" : "$2a$10$FkOVIeun7GnZtUNJKZ0QeeGEkgpQBFJKBa./71oa5giMe7J7Ewy FC", "email" : "user@keystonejs.com", "topSkill" : "default", "status" : "Scan N ot Taken", "name" : { "last" : "User", "first" : "Admin" }, "__v" : 0 } 
+{ "_id" : ObjectId("5652f7f2c98f2f702898e622"), "skills" : "inter", "top3Skills"  : "inter,intra,linguistic", "thinkingTypeR" : "U", "thinkingTypeL" : "Ws", "charOUTER" : "U", "charInner" : "U", "conventional" : 19.73, "enterprise" : 29.37, "social" : 34.7, "artistic" : 21.75, "investigate" : 21.2, 
+"realistic" : 20.1, " atdRight" : 45, "atdLeft" : 44, "natureRank" : 5, "naturePercent" : 11.94, "interRank" : 1, "interPercent" : 15.81, "intraRank" : 2, "intraPercent" : 15.24, 
+"musicMIRank" : 4, "musicPercent" : 12.42, "kinestheticRank" : 6, "kinestheticPercent" : 10.81, "spatialRank" : 8, "spatialPercent" : 10.24, "mathRank" : 7, "mathPercent" : 10.73, 
+"languageRank" : 3, "languagePercent" : 12.82, "learningBy" : " AKV", "kinesthetic" : 31.8, "auditory" : 38.8, "visual" : 29.4, "cq" : 23, "aq" : 23, "iq" : 24, "eq" : 31, "visualPerceptionRank" : 9,
+ "visualPerceptionFingerPattern" : "U", "musicRank" : 4, "musicFingerPattern" : "U", "grossMotorRank" : 8 , "grossMotorFingerPattern" : "U", "imagineRank" : 7, "imagineFingerPattern" : " U",
+ "leadershipRank" : 1, "leadershipFingerPattern" : "U", "observationRank" : 6 , "observationFingerPattern" : "U", "languageListenRank" : 3, "languageListenFingerPattern" : "U", "fineMotorRank"
+ : 5, "fineMotorFingerPattern" : "U", "mathLogicRank" : 10, "mathLogicFingerPattern" : "Ws", "managementRank" : 2, "managementFingerPattern" : "U", "integrated" : 0, "reflective" : 0, "critical" 
+ : 0, "affective" : 90, "cognitive" : 10, "tfrc" : "152", "process" : 35.83, "motive" : 64.1 7, "rightBrain" : 48.7, "leftBrain" : 51.3, "occipitalLobe" : 16.45, "temporalLobe" : 21.71, 
+ "parietalLobe" : 17.76, "frontalLobe" : 15.79, "preFrontalLobe" : 2 8.29, "password" : "$2a$10$/oazuXuGrqATkJNUlJEk6OOPIvH1F8hOmgRJWqHYIbUqSHaEYDN5. ", "phoneNumber" : "9686381336", "gender"
+ : "F", "email" : "deeptig84@gmail.com" , "address" : "No. 72, 8th Cross, 6th Main, Venkatpura, Koramangala 1st Block\r\ nBangalore Karnataka 560034 India",
+ "dob" : ISODate("1990-05-13T18:30:00Z"), "topSkill" : "inter", "status" : "Report Processed", "parent" : { "last" : "Gupta",  "first" : "Shrawan/Anita" }, 
+ "name" : { "last" : "Gupta", "first" : "Deepti" },  "__v" : 0, "isAdmin" : false } 
+ 
+ 
+ { "_id" : ObjectId("5652f93ac98f2f702898e624"), "skills" : "default", "password"  : "$2a$10$oDK523Q3FyEEjU0YdT1B4.y.HkjaWlFFYSrapW9QsyhZhWtuA.fne", "phoneNumber"  : "9739742036", "gender" : "M", "email" : "anuraggpta86@gmail.com", "topSkill" : "default", "status" : "Scan Not Taken", "name" : { "last" : "Gupta", "first" :  "Anurag" }, "__v" : 0 }
+ 
+ 
+ 
+ 
+ 
+ 
+ managementFingerPercent
+ 
+ 
+ 
+mongoimport --db find-your-talents-adminn --collection genius --type csv --headerline --file C:\Heineken\DataI2G.csv 
+
+ 
+ APPLICATION URLS:
+ 
+ 
+
+
+mongodb://heroku_wx60bphv:t2vu8eolmbrik0uiur0cahva0j@ds027318.mongolab.com:27318/heroku_wx60bphv
+mongoimport --host ds027318.mongolab.com --port 27318 --db heroku_wx60bphv -u heroku_wx60bphv -p t2vu8eolmbrik0uiur0cahva0j --collection genius --type csv --headerline --file C:\Heineken\DataI2G.csv
+
+
+mongo -u heroku_wx60bphv -p t2vu8eolmbrik0uiur0cahva0j --host ds027318.mongolab.com --port 27318 --db heroku_wx60bphv
+
+mongo ds027318.mongolab.com:27318/heroku_wx60bphv -u heroku_wx60bphv -p t2vu8eolmbrik0uiur0cahva0j
+
+
+
+
+

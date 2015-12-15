@@ -6,6 +6,7 @@ var Types = keystone.Field.Types;
  * Genius Model
  * ==========
  */
+ 
 
 var Genius = new keystone.List('Genius',{
 	autokey: { path: 'skills', from: 'topSkill', unique: false },
@@ -27,11 +28,15 @@ function checkTop3Skills(){
 	return true;
 }
 
+var StatusMsgAndSub = require('./StatusMessage');
+
+//console.log('hello' + StatusMsgAndSub.tryfun() );
+
 function callback(err){
   if (err) return console.error(err);
   console.log('users notified!');
 }
-
+/*
 function sendEmail(fetchedUsers){
 	console.log("Should send an email"+fetchedUsers);
 	/*new keystone.Email('enquiry-notification').send({
@@ -42,10 +47,11 @@ function sendEmail(fetchedUsers){
 		},
 		subject: 'New Enquiry for Find Your Talents Adminn',
 		enquiry: enquiry
-	}, callback);*/
-}
+	}, callback);
+}*/
 
-function sendMessage(fetchedUsers){
+
+function sendMessage(fetchedUsers,content,subject){
 	console.log("Should send a message");
 	//Add Twilio code here..
 }
@@ -53,14 +59,16 @@ function sendMessage(fetchedUsers){
 Genius.add({
 	name: { type: Types.Name, required: true, index: true },
 	parent: { type: Types.Name, dependsOn: { status: 'Report Processed'},index: true,initial: true },
-	dob: {type: Types.Date, dependsOn: { status: 'Report Processed'}, format: 'MM/DD/YYYY',initial: true},
+	dob: {type: Types.Date, dependsOn: { status: 'Report Processed'}, format: 'YYYY-MM-DD',initial: true},
+	dos: {type: Types.Date, dependsOn: { status: 'Report Processed'}, format: 'YYYY-MM-DD',initial: true},
+	counsellingDate: {type: Types.Date, dependsOn: { status: 'Counselling Done'}, format: 'YYYY-MM-DD HH:MM LT',initial: true},
 	address : { type: Types.Textarea, height:2,dependsOn: { status: 'Report Processed'} ,initial: true},
 	email: { type: Types.Email, initial: true, required: true, index: true },
 	gender:{ type: Types.Select, options: 'M,F',index: true,initial: true,required: false},
 	phoneNumber: {type: Types.Text, initial: true, required: false, index: true},
 	password: { type: Types.Password, initial: true, required: true },
-	status: {type: Types.Select, options: 'Scan Not Taken, Scan Scheduled,Scan Taken-Report Not Arrived, Report Processed', default: 'Scan Not Taken', index: true,initial: true, required: false },
-	scanAppointmentDate: {type: Types.Datetime, dependsOn: { status: 'Scan Scheduled'}, initial: true,label:'Scan Appointment Date'},
+	status: {type: Types.Select, options: 'Scan Not Taken,Scan Scheduled,Scan Taken-Report Not Arrived,Counselling Done,Report Processed', default: 'Scan Not Taken', index: true,initial: true, required: false },
+	scanAppointmentDate: {type: Types.Datetime, dependsOn: { status: 'Scan Scheduled'}, initial: true,label:'Scan Appointment Date', format: 'YYYY-MM-DD HH:MM LT'},
 	//Brain Specific information here
 	preFrontalLobe: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'PRE-FRONTAL LOBE'},
 	frontalLobe: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'FRONTAL LOBE'},
@@ -82,24 +90,34 @@ Genius.add({
 	//Skill specific information here
 	managementFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'MANAGEMENT FINGER PATTERN'},
 	managementRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MANAGEMENT RANK'},
+	managementFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MANAGEMENT PERCENTAGE'},
 	mathLogicFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'MATH/LOGIC FINGER PATTERN'},
 	mathLogicRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MATH/LOGIC RANK'},
+	mathLogicFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MATH-LOGIC PERCENTAGE'},
 	fineMotorFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'FINE MOTOR SKILL FINGER PATTERN'},
 	fineMotorRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'FINE MOTOR SKILL RANK'},
+	fineMotorFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'FINE MOTOR PERCENTAGE'},
 	languageListenFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'LANGUAGE LISTEN FINGER PATTERN'},
 	languageListenRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'LANGUAGE LISTEN RANK'},
+	languageListenFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'LANGUAGE LISTEN PERCENTAGE'},
 	observationFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'OBSERVATION FINGER PATTERN'},
 	observationRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'OBSERVATION RANK'},
+	observationFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'OBSERVATION PERCENTAGE'},
 	leadershipFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'LEADERSHIP FINGER PATTERN'},
 	leadershipRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'LEADERSHIP RANK'},
+	leadershipFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'LEADERSHIP PERCENTAGE'},	
 	imagineFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'IMAGINE FINGER PATTERN'},
 	imagineRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'IMAGINE RANK'},
+	imagineFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'IMAGINE PERCENTAGE'},	
 	grossMotorFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'GROSS MOTOR SKILL FINGER PATTERN'},
 	grossMotorRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'GROSS MOTOR SKILL RANK'},
+	grossMotorFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'GROSS MOTOR PERCENTAGE'},
 	musicFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'MUSIC FINGER PATTERN'},
 	musicRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MUSIC RANK'},
+	musicFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'MUSIC PERCENTAGE'},
 	visualPerceptionFingerPattern: { type: Types.Text, initial: true, required: false, dependsOn: { status: 'Report Processed'},label:'VISUAL PERCEPTION FINGER PATTERN'},
 	visualPerceptionRank: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'VISUAL PERCEPTION RANK'},
+	visualPerceptionFingerPercent: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'VISUAL PRECEPTION PERCENTAGE'},
 	//IQ Info here
 	eq: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'EQ'},
 	iq: {type: Types.Number, initial: true, index: true,dependsOn: { status: 'Report Processed'},label:'IQ'},
@@ -154,11 +172,52 @@ Genius.schema.virtual('canAccessKeystone').get(function() {
 Genius.schema.pre('save',function(next){
 	if(this.notify){
 		console.log("Notify Users..");
-		async.applyEach([sendEmail,sendMessage],this,callback);
+		var fetchedUser = [];
+		var openingemail ; 
+		var contentemail ;
+		var subemail ; 
+		fetchedUser.push(this);
+		openingemail = "Hi " + this.name.first + ',' + '\n' + StatusMsgAndSub.greetingMessage + '\n'+ '\n';
+		if(this.status == 'Report Processed'  ){
+			contentemail = openingemail + StatusMsgAndSub.reportProcessedMsg ;
+		    subemail = StatusMsgAndSub.reportProcessedSub;
+		
+		}
+		else
+		{
+		
+		if(this.status == 'Counselling Done'  ){
+			contentemail = openingemail + StatusMsgAndSub.counsellingDoneMsg ;
+		    subemail = StatusMsgAndSub.counsellingDoneSub;
+		
+		}
+		else
+		{
+		
+		if(this.status == 'Scan Taken-Report Not Arrived'  ){
+			contentemail = openingemail + StatusMsgAndSub.scanTakenreportNotArrivedMsg ;
+		    subemail = StatusMsgAndSub.scanTakenreportNotArrivedSub;
+		
+		}
+		else
+		{
+		
+		if(this.status == 'Scan Scheduled'  ){
+			contentemail = openingemail + StatusMsgAndSub.scanScheduledMsg + ' for ' + this.scanAppointmentDate;
+		    subemail = StatusMsgAndSub.scanScheduledSub;
+		
+		}
+		}
+		}
+		}
+		contentemail = contentemail + '\n' + StatusMsgAndSub.closingMessage+ '\n' + StatusMsgAndSub.signature;
+		async.applyEach([StatusMsgAndSub.sendEmail,sendMessage],fetchedUser,contentemail,subemail,callback);
 	}
 	this.notify = undefined;
 	next();
-});
+}
+
+);
 
 /**
  * Relationships
